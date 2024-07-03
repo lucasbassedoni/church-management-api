@@ -26,17 +26,23 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	}
 	user.Password = hashedPassword
 
-	db, err := utils.ConnectDB()
-	if err != nil {
-		http.Error(w, "Database connection error", http.StatusInternalServerError)
-		log.Printf("Database connection error: %v", err)
+	db := utils.DB
+
+	// Verificar se o email já está cadastrado
+	var existingUser models.User
+	err = db.QueryRow("SELECT id FROM users WHERE email=$1", user.Email).Scan(&existingUser.ID)
+	if err == nil {
+		http.Error(w, "Email já cadastrado", http.StatusConflict)
 		return
 	}
-	defer db.Close()
+
+	if user.BaptismDate == "" {
+		user.BaptismDate = "0001-01-01"
+	}
 
 	sqlStatement := `
         INSERT INTO users (name, email, password, type, birth_date, baptism_date, address, phone) 
-        VALUES ($1, $2, $3, $4, TO_DATE($5, 'YYYY-MM-DD'), TO_DATE($6, 'YYYY-MM-DD'), $7, $8) 
+        VALUES ($1, $2, $3, $4, to_date($5, 'YYYY-MM-DD'), to_date($6, 'YYYY-MM-DD'), $7, $8) 
         RETURNING id`
 	err = db.QueryRow(sqlStatement, user.Name, user.Email, user.Password, user.Type, user.BirthDate, user.BaptismDate, user.Address, user.Phone).Scan(&user.ID)
 	if err != nil {

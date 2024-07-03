@@ -8,8 +8,8 @@ type User struct {
 	Email       string `json:"email"`
 	Password    string `json:"password"`
 	Type        string `json:"type"`
-	BirthDate   string `json:"birth_date"`
-	BaptismDate string `json:"baptism_date"`
+	BirthDate   string `json:"birthDate"`
+	BaptismDate string `json:"baptismDate"`
 	Address     string `json:"address"`
 	Phone       string `json:"phone"`
 }

@@ -11,12 +11,19 @@ import (
 
 func InitRouter() *mux.Router {
 	r := mux.NewRouter()
+	r.HandleFunc("/api/auth/login", handlers.Login).Methods("POST")
 	r.HandleFunc("/register", handlers.RegisterUser).Methods("POST")
 	return r
 }
 
 func StartServer() {
 	r := InitRouter()
-	handler := cors.Default().Handler(r)
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:3000"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Content-Type", "Authorization"},
+		AllowCredentials: true,
+	})
+	handler := c.Handler(r)
 	http.ListenAndServe(":8080", handler)
 }

@@ -21,7 +21,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	var user models.User
 	db := utils.DB
-	err = db.QueryRow("SELECT id, email, password FROM users WHERE email=$1", creds.Email).Scan(&user.ID, &user.Email, &user.Password)
+	err = db.QueryRow("SELECT id, name, email, password, type, birth_date, baptism_date, address, phone FROM users WHERE email=$1", creds.Email).Scan(&user.ID, &user.Name, &user.Email, &user.Password, &user.Type, &user.BirthDate, &user.BaptismDate, &user.Address, &user.Phone)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
@@ -53,5 +53,13 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		Expires: expirationTime,
 	})
 
-	json.NewEncoder(w).Encode(map[string]string{"token": tokenString})
+	json.NewEncoder(w).Encode(map[string]string{
+		"token":       tokenString,
+		"name":        user.Name,
+		"type":        user.Type,
+		"birthDate":   user.BirthDate,
+		"baptismDate": user.BaptismDate,
+		"address":     user.Address,
+		"phone":       user.Phone,
+	})
 }
