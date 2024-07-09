@@ -55,6 +55,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(user)
 }
 
+/*
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	var creds struct {
 		CurrentPassword string `json:"currentPassword"`
@@ -67,8 +68,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Obtém o usuário autenticado (esta parte pode variar dependendo de como você implementa a autenticação)
-	// Aqui estamos assumindo que você consegue obter o email do usuário autenticado
 	email := r.Context().Value("email").(string)
 
 	var user models.User
@@ -100,3 +99,4 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 }
+*/
