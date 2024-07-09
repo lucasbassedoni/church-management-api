@@ -14,6 +14,10 @@ func InitRouter() *mux.Router {
 	r.HandleFunc("/api/auth/login", handlers.Login).Methods("POST")
 	r.HandleFunc("/register", handlers.RegisterUser).Methods("POST")
 	r.HandleFunc("/api/auth/change-password", handlers.ChangePassword).Methods("POST")
+	r.HandleFunc("/users", handlers.GetUsers).Methods("GET")
+	r.HandleFunc("/users/{id}", handlers.UpdateUser).Methods("PUT")
+	r.HandleFunc("/users/{id}", handlers.DeleteUser).Methods("DELETE")
+	r.HandleFunc("/api/dashboard", handlers.GetDashboardData).Methods("GET")
 	return r
 }
 
