@@ -13,6 +13,7 @@ func InitRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/api/auth/login", handlers.Login).Methods("POST")
 	r.HandleFunc("/register", handlers.RegisterUser).Methods("POST")
+	r.HandleFunc("/api/auth/change-password", handlers.ChangePassword).Methods("POST")
 	return r
 }
 
