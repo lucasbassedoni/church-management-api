@@ -11,11 +11,11 @@ var DB *sql.DB
 
 func ConnectDB() (*sql.DB, error) {
 	const (
-		host     = "localhost"
-		port     = 5432
-		user     = "church_admin"
-		password = "12345"
-		dbname   = "church_management"
+		host     = "viaduct.proxy.rlwy.net"
+		port     = 50913
+		user     = "postgres"
+		password = "DwVqApocFjDrFUqfYSbZhrDXwveKNFyq"
+		dbname   = "railway"
 	)
 
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
