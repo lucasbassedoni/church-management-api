@@ -13,4 +13,5 @@ type DashboardData struct {
 	TotalBaptized    int            `json:"total_baptized"`
 	RecentUsers      []string       `json:"recent_users"`
 	BirthdayUsers    []BirthdayUser `json:"birthday_users"`
+	UpcomingEvents   []Event        `json:"upcoming_events"`
 }

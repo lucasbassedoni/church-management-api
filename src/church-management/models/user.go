@@ -15,13 +15,13 @@ type User struct {
 	Status     string `json:"status"`
 }
 
-// Credentials represents the credentials for login
+// Credenciais para login
 type Credentials struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
-// Claims represents the JWT claims
+// JWT Token Claim
 type Claims struct {
 	Email string `json:"email"`
 	jwt.StandardClaims

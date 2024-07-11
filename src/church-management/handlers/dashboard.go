@@ -100,6 +100,32 @@ func GetDashboardData(w http.ResponseWriter, r *http.Request) {
 		birthdayUsers = append(birthdayUsers, user)
 	}
 
+	// Próximos eventos
+	eventRows, err := db.Query(`
+		SELECT name, date, time, location 
+		FROM events 
+		WHERE date >= CURRENT_DATE 
+		ORDER BY date ASC, time ASC 
+		LIMIT 3`)
+	if err != nil {
+		http.Error(w, "Error fetching upcoming events", http.StatusInternalServerError)
+		log.Printf("Error fetching upcoming events: %v", err)
+		return
+	}
+	defer eventRows.Close()
+
+	var upcomingEvents []models.Event
+	for eventRows.Next() {
+		var event models.Event
+		err := eventRows.Scan(&event.Name, &event.Date, &event.Time, &event.Location)
+		if err != nil {
+			http.Error(w, "Error scanning upcoming events", http.StatusInternalServerError)
+			log.Printf("Error scanning upcoming events: %v", err)
+			return
+		}
+		upcomingEvents = append(upcomingEvents, event)
+	}
+
 	data := models.DashboardData{
 		TotalUsers:       totalUsers,
 		TotalMembers:     totalMembers,
@@ -107,6 +133,7 @@ func GetDashboardData(w http.ResponseWriter, r *http.Request) {
 		TotalBaptized:    totalBaptized,
 		RecentUsers:      recentUsers,
 		BirthdayUsers:    birthdayUsers,
+		UpcomingEvents:   upcomingEvents,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
