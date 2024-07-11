@@ -1,0 +1,28 @@
+{
+    "version": 2,
+    "name": "church-management-api",
+    "builds": [
+      {
+        "src": "main.go",
+        "use": "@vercel/go"
+      },
+      {
+        "src": "src/**/*",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "build"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "main.go"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/src/$1"
+      }
+    ]
+  }
+  
