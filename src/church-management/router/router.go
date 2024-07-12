@@ -31,7 +31,7 @@ func InitRouter() *mux.Router {
 func StartServer() {
 	r := InitRouter()
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000", "https://church-management-app-seven.vercel.app", "https://church-management-app-production.up.railway.app"},
+		AllowedOrigins:   []string{"http://localhost:3000", "https://church-management-app-production.up.railway.app"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,
